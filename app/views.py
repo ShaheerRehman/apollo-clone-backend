@@ -1,5 +1,9 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from rest_framework import generics
+from rest_framework import views
+from rest_framework.response import Response
+
 from .tasks import test_func
 from rest_framework.viewsets import ModelViewSet
 from .models import Person, Company
@@ -10,7 +14,14 @@ from .serializers import PersonSerializer, CompanySerializer
 #     return HttpResponse("Done")
 
 
-class PersonView(ModelViewSet):
+class PersonGet(views.APIView):
+    def get(self):
+        persons = Person.objects.all()
+        serializer = PersonSerializer(persons, many=True)
+        return Response(serializer.data)
+
+
+class Person(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
 
