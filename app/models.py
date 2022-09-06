@@ -20,7 +20,6 @@ class Person(models.Model):
     location = models.CharField(max_length=128)
     employees = models.IntegerField(default=0)
     industry = models.CharField(max_length=128)
-    keywords = ArrayField(models.CharField(max_length=64), blank=True, null=True)
     ## Assuming that on person can belong to only on company but one company can have many people.
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
