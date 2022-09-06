@@ -15,16 +15,19 @@ from .serializers import PersonSerializer, CompanySerializer
 
 
 class PersonGet(views.APIView):
-    def get(self):
+    def get(self, request):
         persons = Person.objects.all()
         serializer = PersonSerializer(persons, many=True)
         return Response(serializer.data)
 
 
-class Person(generics.CreateAPIView, generics.RetrieveUpdateDestroyAPIView):
+class PersonCreate(generics.CreateAPIView):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
 
+class PersonRetPutDel(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
 
 class CompanyView(ModelViewSet):
     queryset = Company.objects.all()
