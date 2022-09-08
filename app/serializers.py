@@ -5,7 +5,8 @@ from rest_framework.serializers import ModelSerializer
 class PersonSerializer(ModelSerializer):
     class Meta:
         model = Person
-        fields = "__all__"
+        fields = ['name','job', 'email','location' ,'employees','industry', 'company', 'companyName']
+        read_only_fields = ['companyName',]
 
 
 class CompanySerializer(ModelSerializer):

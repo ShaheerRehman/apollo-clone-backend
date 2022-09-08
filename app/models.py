@@ -23,5 +23,12 @@ class Person(models.Model):
     ## Assuming that on person can belong to only on company but one company can have many people.
     company = models.ForeignKey(Company, on_delete=models.CASCADE)
 
+    def companyName(self):
+        comp = Company.objects.get(name=self.company).name
+        hq = Company.objects.get(name=self.company).hqLocation
+        type = Company.objects.get(name=self.company).type
+        return {'name': comp, 'headquarters': hq, 'type': type }
+
+
     def __str__(self):
         return self.name

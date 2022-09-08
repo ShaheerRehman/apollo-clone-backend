@@ -32,3 +32,20 @@ class PersonRetPutDel(generics.RetrieveUpdateDestroyAPIView):
 class CompanyView(ModelViewSet):
     queryset = Company.objects.all()
     serializer_class = CompanySerializer
+
+
+from django_filters import rest_framework as filters
+
+
+class PersonsListOnLocation(generics.ListAPIView):
+    serializer_class = PersonSerializer
+    def get_queryset(self):
+        location = self.kwargs['location']
+        return Person.objects.filter(location=location)
+
+
+class PersonsListOnJob(generics.ListAPIView):
+    serializer_class = PersonSerializer
+    def get_queryset(self):
+        job = self.kwargs['job']
+        return Person.objects.filter(job=job)
