@@ -49,3 +49,15 @@ class PersonsListOnJob(generics.ListAPIView):
     def get_queryset(self):
         job = self.kwargs['job']
         return Person.objects.filter(job=job)
+
+class PersonsListOnCompany(generics.ListAPIView):
+    serializer_class = PersonSerializer
+    def get_queryset(self):
+        # companies = []
+        peepsOfComp = []
+        comp = self.kwargs['comp']
+        for person in Person.objects.all():
+            thisCompany = person.companyName().get('name')
+            if thisCompany == comp:
+                peepsOfComp.append(person)
+        return peepsOfComp
